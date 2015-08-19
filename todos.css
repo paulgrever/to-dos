@@ -1,1 +1,41 @@
 /* CSS declarations go here */
+[name=todoItem]{
+    border:none;
+    font-family: "Times New Roman";
+    font-size: 100%;
+    padding:0.15em;
+}
+
+[name=todoItem]:hover{
+    border:none;
+    font-family: "Times New Roman";
+    font-size: 100%;
+    padding:0.15em;
+    background-color: #f9f9f9;
+    cursor:pointer;
+}
+
+[name=todoItem]:focus{
+    border:none;
+    font-family: "Times New Roman";
+    font-size: 100%;
+    padding:0.15em;
+    background-color: #f9f9f9;
+    cursor:default;
+    outline:none;
+}
+
+.checked{
+    background-color:#f0f0f0;
+    color:#666;
+}
+
+.checked [name=todoItem]{
+    text-decoration: line-through;
+}
+
+.checked [name=todoItem],
+.checked [name=todoItem]:hover,
+.checked [name=todoItem]:focus{
+    background-color:#f0f0f0;
+}
