@@ -1,5 +1,15 @@
 Todos = new Meteor.Collection('todos');
 
+Router.route('/register');
+Router.route('/login');
+Router.route('/', {
+  name : 'home',
+  template: 'home'
+});
+Router.configure({
+    layoutTemplate: 'main'
+});
+
 if(Meteor.isClient){
     // client code goes here
   Template.todos.helpers({

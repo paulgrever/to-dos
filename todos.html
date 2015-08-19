@@ -1,9 +1,4 @@
-<head>
-    <title>Todos</title>
-</head>
-<body>
-  {{> todos}}
-</body>
+
 
 <template name="todos">
   {{> addTodo}}
@@ -32,4 +27,33 @@
 
 <template name="todosCount">
   <p>You have completed {{completedTodos}} out of {{totalTodos}} tasks.</p>
+</template>
+
+<template name="register">
+    <h2>Register</h2>
+</template>
+
+<template name="login">
+    <h2>Login</h2>
+</template>
+
+<template name="home">
+    <p>Welcome to the Todos application.</p>
+</template>
+
+<template name="main">
+    <h1>Todos</h1>
+    {{> navigation}}
+    {{> yield}}
+    <hr />
+    <p>Copyright &copy; Todos, 2014-2015.</p>
+</template>
+
+<template name="navigation">
+  <ul>
+    <li><a href="{{pathFor route='home'}}">Home</a></li>
+    <li><a href="{{pathFor route='register'}}">Register</a></li>
+    <li><a href="{{pathFor route='login'}}">Login</a></li>
+  </ul>
+
 </template>
