@@ -44,6 +44,7 @@
 <template name="main">
     <h1>Todos</h1>
     {{> navigation}}
+    {{> lists}}
     {{> yield}}
     <hr />
     <p>Copyright &copy; Todos, 2014-2015.</p>
@@ -56,4 +57,25 @@
     <li><a href="{{pathFor route='login'}}">Login</a></li>
   </ul>
 
+</template>
+
+<template name="addList">
+    <form>Create a list:
+        <input type="text" placeholder="List name here..." name="listName">
+    </form>
+</template>
+
+<template name="lists">
+    <h2>Lists</h2>
+    {{> addList}}
+    <ul>
+        {{#each list}}
+            <li><a href="{{pathFor route='listPage'}}">{{name}}</a> </li>
+        {{/each}}
+    </ul>
+</template>
+
+<template name="listPage">
+    <h2>Tasks: {{name}}</h2>
+    {{> todos}}
 </template>
