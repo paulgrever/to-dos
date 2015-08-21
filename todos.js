@@ -117,21 +117,29 @@ if(Meteor.isClient){
   Template.login.events({
     'submit form' : function(event){
       event.preventDefault();
-      var email = $('[name=email]').val();
-      var password = $('[name=password]').val();
-      Meteor.loginWithPassword(email, password, function(error){
-        if(error){
-          console.log(error.reason);
-        } else {
-          var currentRoute = Router.current().route.getName();
-          if (currentRoute == "login") {
-           Router.go("home");
-         } 
-        }
-      });
-      $('[name=email]').val("");
-      $('[name=password]').val("M");
+      // var email = $('[name=email]').val();
+      // var password = $('[name=password]').val();
+      // Meteor.loginWithPassword(email, password, function(error){
+      //   if(error){
+      //     console.log(error.reason);
+      //   } else {
+      //     var currentRoute = Router.current().route.getName();
+      //     if (currentRoute == "login") {
+      //      Router.go("home");
+      //    } 
+      //   }
+      // });
+      // $('[name=email]').val("");
+      // $('[name=password]').val("");
     }
+  });
+
+Template.login.onRendered(function(){
+    $('.login').validate();
+});
+
+  Template.login.onDestroyed(function(){
+      console.log("The 'login' template was just destroyed.");
   });
 
   Template.navigation.events({
@@ -145,20 +153,47 @@ if(Meteor.isClient){
   Template.register.events({
     "submit form" : function(event){
       event.preventDefault();
-      var email = $('[name=email]').val();
-      var password = $('[name=password]').val();
-      Accounts.createUser({
-        email : email,
-        password : password
-      }, function(error){
-        if(error){
-          console.log(error.reason);
-        } else {
-          Router.go("home")
-        }
-      });
+      // var email = $('[name=email]').val();
+      // var password = $('[name=password]').val();
+      // Accounts.createUser({
+      //   email : email,
+      //   password : password
+      // }, function(error){
+      //   if(error){
+      //     console.log(error.reason);
+      //   } else {
+      //     Router.go("home")
+      //   }
+      // });
     }
   });
+  
+  $.validator.setDefaults({
+    rules: {
+        email: {
+            required: true,
+            email: true
+        },
+        password: {
+            required: true,
+            minlength: 6
+        }
+    },
+    messages: {
+        email: {
+            required: "You must enter an email address.",
+            email: "You've entered an invalid email address."
+        },
+        password: {
+            required: "You must enter a password.",
+            minlength: "Your password must be at least {0} characters."
+        }
+    }
+});
+
+Template.register.onRendered(function(){
+    $('.register').validate();
+});
 
   Template.todoItem.events({
     'click .delete-todo' : function(event){
