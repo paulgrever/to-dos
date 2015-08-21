@@ -11,13 +11,6 @@ Router.route('/list/:_id', {
         var currentUser = Meteor.userId();
         return Lists.findOne({ _id: currentList, createdBy: currentUser });
     },
-    onRun: function(){
-        console.log("You triggered 'onRun' for 'listPage' route.");
-        this.next();
-    },
-    onRerun: function(){
-        console.log("You triggered 'onRerun' for 'listPage' route.");
-    },
     onBeforeAction: function(){
         console.log("You triggered 'onBeforeAction' for 'listPage' route.");
         var currentUser = Meteor.userId();
@@ -27,12 +20,10 @@ Router.route('/list/:_id', {
             this.render("login");
         }
     },
-    onAfterAction: function(){
-        console.log("You triggered 'onAfterAction' for 'listPage' route.");
-    },
-    onStop: function(){
-        console.log("You triggered 'onStop' for 'listPage' route.");
+    subscriptions : function(){
+      return Meteor.subscribe('todos');
     }
+
 });
 Router.route('/', {
   name : 'home',
@@ -43,6 +34,8 @@ Router.configure({
 });
 
 if(Meteor.isClient){
+  Meteor.subscribe('lists');
+
     // client code goes here
   Template.todos.helpers({
     'todo' : function(){
@@ -216,7 +209,7 @@ Template.login.onRendered(function(){
 });
 
 Template.register.onRendered(function(){
-    $('.register').validate({
+    var validator = $('.register').validate({
         submitHandler: function(event){
             var email = $('[name=email]').val();
             var password = $('[name=password]').val();
@@ -269,5 +262,12 @@ Template.register.onRendered(function(){
 }
 
 if(Meteor.isServer){
-    // server code goes here
+  Meteor.publish('lists', function(){
+    var currentUser = this.userId;
+    return Lists.find({createdBy : currentUser});
+  });
+  Meteor.publish('todos', function(){
+    var currentUser = this.userId;
+    return Todos.find({createdBy : currentUser})
+  })  
 }
